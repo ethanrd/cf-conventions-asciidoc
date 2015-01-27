@@ -1,0 +1,576 @@
+[[dimensionless-v-coord]]
+
+[appendix]
+== Dimensionless Vertical Coordinates
+
+
+        The definitions given here allow an application to compute
+        dimensional coordinate values from the dimensionless
+        ones and associated variables. The formulas are
+        expressed for a gridpoint 
+        [x-]`(n,k,j,i)` 
+        where [x-]`i` and [x-]`j` are
+        the horizontal indices, [x-]`k` is the vertical
+        index and [x-]`n`
+        is the time index. A coordinate variable is associated
+        with its definition by the value of the 
+        [x-]`standard_name`
+        attribute. The terms in the definition are associated
+        with file variables by the 
+        [x-]`formula_terms` 
+        attribute. The
+        [x-]`formula_terms`
+        attribute takes a string value, the string
+        being comprised of blank-separated elements of the form
+        "[x-]`term: variable`", where
+        [x-]`term` is a keyword that represents
+        one of the terms in the definition, and
+        [x-]`variable` is the
+        name of the variable in a netCDF file that contains
+        the values for that term. The order of elements is
+        not significant.
+    
+
+
+        The gridpoint indices are not formally part of the
+        definitions, but are included to illustrate the indices
+        that __might__ be present in the file variables. For example,
+        a vertical coordinate whose definition contains a time
+        index is not necessarily time dependent in all netCDF
+        files. Also, the definitions are given in general forms
+        that may be simplified by omitting certain terms. A term
+        that is omitted from the 
+        [x-]`formula_terms`
+        attribute should
+        be assumed to be zero.
+    
+
+
+    
+    
+     Atmosphere natural log pressure coordinate 
+                
+++++++++++++++++++++++++++++++++++++++
+<programlisting format="linespecific">
+<varname>standard_name</varname> = "atmosphere_ln_pressure_coordinate"
+                </programlisting>
+++++++++++++++++++++++++++++++++++++++
+
+
+            
+
+
+              Definition::: 
+----
+
+p(k) = p0 * exp(-lev(k))
+                     
+----
+
+
+
+             where [x-]`p(k)` is the pressure
+             at gridpoint [x-]`(k)`, [x-]`p0`
+             is a reference pressure, [x-]`lev(k)`
+             is the dimensionless coordinate
+             at vertical gridpoint [x-]`(k)`.
+            
+
+
+              The format for the [x-]`formula_terms` attribute is 
+              
+++++++++++++++++++++++++++++++++++++++
+<programlisting format="linespecific">
+<varname>formula_terms</varname> = "p0: var1 lev: var2"
+              </programlisting>
+++++++++++++++++++++++++++++++++++++++
+
+
+            
+
+
+    
+
+
+    
+     Atmosphere sigma coordinate 
+                
+++++++++++++++++++++++++++++++++++++++
+<programlisting format="linespecific">
+<varname>standard_name</varname> = "atmosphere_sigma_coordinate"
+                </programlisting>
+++++++++++++++++++++++++++++++++++++++
+
+
+            
+
+
+              Definition::: 
+----
+
+p(n,k,j,i) = ptop + sigma(k)*(ps(n,j,i)-ptop)
+                     
+----
+
+
+
+              where [x-]`p(n,k,j,i)` is the
+              pressure at gridpoint [x-]`(n,k,j,i)`,
+              [x-]`ptop` is the pressure
+              at the top of the model, [x-]`sigma(k)`
+              is the dimensionless coordinate at vertical gridpoint
+              [x-]`(k)`, and [x-]`ps(n,j,i)`
+              is the surface pressure at horizontal
+              gridpoint [x-]`(j,i)` and time [x-]`(n)`.
+            
+
+
+              The format for the formula_terms attribute is 
+              
+++++++++++++++++++++++++++++++++++++++
+<programlisting format="linespecific">
+<varname>formula_terms</varname> = "sigma: var1 ps: var2 ptop: var3"
+              </programlisting>
+++++++++++++++++++++++++++++++++++++++
+
+
+            
+
+
+     Atmosphere hybrid sigma pressure coordinate 
+                
+++++++++++++++++++++++++++++++++++++++
+<programlisting format="linespecific">
+<varname>standard_name</varname> = "atmosphere_hybrid_sigma_pressure_coordinate"
+                </programlisting>
+++++++++++++++++++++++++++++++++++++++
+
+
+            
+
+
+              Definition::: 
+----
+
+p(n,k,j,i) = a(k)*p0 + b(k)*ps(n,j,i)
+                     
+----
+
++
+or
+
++
+----
+
+p(n,k,j,i) = ap(k) + b(k)*ps(n,j,i)
+                     
+----
+
+
+              where 
+              [x-]`p(n,k,j,i)`
+              is the pressure at gridpoint
+              [x-]`(n,k,j,i)`,
+              [x-]`a(k)`
+              or 
+              [x-]`ap(k)`
+              and 
+              [x-]`b(k)`
+              are components of the hybrid coordinate at
+              level 
+              [x-]`k`,
+              [x-]`p0` 
+              is a reference
+              pressure, and 
+              [x-]`ps(n,j,i)`
+              is the surface pressure at horizontal gridpoint
+              [x-]`(j,i)` 
+              and time
+              [x-]`(n)`. 
+              The choice of whether 
+              [x-]`a(k)` 
+              or
+              [x-]`ap(k)` 
+              is used depends on
+              model formulation; the former is a dimensionless fraction,
+              the latter a pressure value. In both formulations,
+              [x-]`b(k)` 
+              is a dimensionless
+              fraction.
+            
+
+
+              The format for the [x-]`formula_terms` attribute is
+              
+++++++++++++++++++++++++++++++++++++++
+<programlisting format="linespecific">
+<varname>formula_terms</varname> = "a: var1 b: var2 ps: var3 p0: var4" 
+              </programlisting>
+++++++++++++++++++++++++++++++++++++++
+
+
+              where 
+              [x-]`a` 
+              is replaced by 
+              [x-]`ap` 
+              if appropriate. 
+            
+
+
+              The hybrid sigma-pressure coordinate for level [x-]`k` is defined as 
+              [x-]`a(k)+b(k)` 
+              or 
+              [x-]`ap(k)/p0+b(k)`, 
+              as appropriate.
+            
+
+
+
+     Atmosphere hybrid height coordinate 
+        
+++++++++++++++++++++++++++++++++++++++
+<programlisting format="linespecific">
+<varname>standard_name</varname> = "atmosphere_hybrid_height_coordinate"
+        </programlisting>
+++++++++++++++++++++++++++++++++++++++
+
+
+      
+
+
+        Definition::: 
+----
+
+z(n,k,j,i) = a(k) + b(k)*orog(n,j,i)
+              
+----
+
+
+
+        where 
+        [x-]`z(n,k,j,i)`
+        is the height above the geoid (approximately mean sea level) at gridpoint 
+        [x-]`(k,j,i)`
+        and 
+        [x-]`time (n)`, 
+        [x-]`orog(n,j,i)`
+        is the height of the surface above 
+        the geoid at
+        [x-]`(j,i)` 
+        and 
+        [x-]`time (n)`, 
+        and [x-]`a(k)` and [x-]`b(k)`
+        are the coordinates
+        which define hybrid height level 
+        [x-]`k`.
+        [x-]`a(k)` has the dimensions of height and
+        [x-]`b(i)` is dimensionless.
+      
+
+
+        The format for the 
+        [x-]`formula_terms` 
+        attribute is 
+        
+++++++++++++++++++++++++++++++++++++++
+<programlisting format="linespecific">
+<varname>formula_terms</varname> = "a: var1 b: var2 orog: var3"
+        </programlisting>
+++++++++++++++++++++++++++++++++++++++
+
+
+      
+
+
+        There is no dimensionless hybrid height coordinate. The hybrid
+        height is best approximated as [x-]`a(k)`
+        if a level-dependent constant is needed.
+      
+
+
+
+     Atmosphere smooth level vertical (SLEVE) coordinate 
+        
+++++++++++++++++++++++++++++++++++++++
+<programlisting format="linespecific">
+<varname>standard_name</varname> = "atmosphere_sleve_coordinate"
+        </programlisting>
+++++++++++++++++++++++++++++++++++++++
+
+
+      
+
+
+        Definition::: 
+----
+
+z(n,k,j,i) = a(k)*ztop + b1(k)*zsurf1(n,j,i) + b2(k)*zsurf2(n,j,i)
+              
+----
+
+
+
+        where 
+        [x-]`z(n,k,j,i)`
+        is the height above the geoid (approximately mean sea level) at gridpoint 
+        [x-]`(k,j,i)`
+        and time
+        [x-]`(n)`, 
+        [x-]`ztop` 
+        is the height of the top of the model, and
+        [x-]`a(k)`,
+        [x-]`b1(k)`,
+        and
+        [x-]`b2(k)`
+        are the dimensionless coordinates which define hybrid level
+        [x-]`k`.
+        [x-]`zsurf1(n,j,i)`
+        and 
+        [x-]`zsurf2(n,j,i)`
+        are respectively the large and small parts of the topography.  See Shaer et al
+        [<<sch02,SCH02>>]
+        for details.
+      
+
+
+        The format for the 
+        [x-]`formula_terms` 
+        attribute is 
+        
+++++++++++++++++++++++++++++++++++++++
+<programlisting format="linespecific">
+<varname>formula_terms</varname> = "a: var1 b1: var2 b2: var3 ztop: var4 zsurf1: var5
+                zsurf2: var6"
+        </programlisting>
+++++++++++++++++++++++++++++++++++++++
+
+
+      
+
+
+        The hybrid height coordinate for level 
+        [x-]`k` is defined as
+        [x-]`a(k)*ztop`.
+      
+
+
+      
+    Ocean sigma coordinate 
+        
+++++++++++++++++++++++++++++++++++++++
+<programlisting format="linespecific">
+<varname>standard_name</varname> = "ocean_sigma_coordinate"
+        </programlisting>
+++++++++++++++++++++++++++++++++++++++
+
+
+      
+
+
+        Definition::: 
+----
+
+z(n,k,j,i) = eta(n,j,i) + sigma(k)*(depth(j,i)+eta(n,j,i))
+              
+----
+
+
+
+        where [x-]`z(n,k,j,i)` is height, positive upwards, relative to
+        ocean datum (e.g. mean sea level) at gridpoint [x-]`(n,k,j,i)`,
+        [x-]`eta(n,j,i)` is the height of the ocean surface, positive upwards,
+        relative to ocean datum at gridpoint [x-]`(n,j,i)`,
+        [x-]`sigma(k)` is the
+        dimensionless coordinate at vertical gridpoint [x-]`(k)`,
+        and [x-]`depth(j,i)`
+        is the distance from ocean datum to sea floor (positive value)
+        at horizontal gridpoint [x-]`(j,i)`.
+      
+
+
+        The format for the 
+        [x-]`formula_terms` 
+        attribute is 
+        
+++++++++++++++++++++++++++++++++++++++
+<programlisting format="linespecific">
+<varname>formula_terms</varname> = "sigma: var1 eta: var2 depth: var3"
+        </programlisting>
+++++++++++++++++++++++++++++++++++++++
+
+
+      
+
+
+
+    
+    Ocean s-coordinate 
+        
+++++++++++++++++++++++++++++++++++++++
+<programlisting format="linespecific">
+<varname>standard_name</varname> = "ocean_s_coordinate"
+        </programlisting>
+++++++++++++++++++++++++++++++++++++++
+
+
+      
+
+
+        Definition::: 
+----
+
+z(n,k,j,i) = eta(n,j,i)*(1+s(k)) + depth_c*s(k) +
+             (depth(j,i)-depth_c)*C(k)
+
+where  C(k) = (1-b)*sinh(a*s(k))/sinh(a) + 
+         b*[tanh(a*(s(k)+0.5))/(2*tanh(0.5*a)) - 0.5]
+              
+----
+
+
+
+        where [x-]`z(n,k,j,i)` is height, positive upwards, relative to ocean
+        datum (e.g. mean sea level) at gridpoint [x-]`(n,k,j,i)`,
+        [x-]`eta(n,j,i)` is
+        the height of the ocean surface, positive upwards, relative to
+        ocean datum at gridpoint [x-]`(n,j,i)`, [x-]`s(k)` is the dimensionless
+        coordinate at vertical gridpoint [x-]`(k)`, and [x-]`depth(j,i)` is the distance
+        from ocean datum to sea floor (positive value) at horizontal
+        gridpoint [x-]`(j,i)`. The constants
+        [x-]`a`, [x-]`b`, and [x-]`depth_c` control the stretching.
+      
+
+
+        The format for the 
+        [x-]`formula_terms` 
+        attribute is 
+        
+++++++++++++++++++++++++++++++++++++++
+<programlisting format="linespecific">
+<varname>formula_terms</varname> = "s: var1 eta: var2 depth: var3 a: var4 b: var5 depth_c: var6"
+        </programlisting>
+++++++++++++++++++++++++++++++++++++++
+
+
+      
+
+
+    
+    
+    Ocean sigma over z coordinate 
+        
+++++++++++++++++++++++++++++++++++++++
+<programlisting format="linespecific">
+<varname>standard_name</varname> = "ocean_sigma_z_coordinate"
+        </programlisting>
+++++++++++++++++++++++++++++++++++++++
+
+
+      
+
+
+        Definition::: 
+----
+
+for k <= nsigma:
+
+  z(n,k,j,i) = eta(n,j,i) + sigma(k)*(min(depth_c,depth(j,i))+eta(n,j,i))
+ 
+for k > nsigma:
+
+  z(n,k,j,i) = zlev(k)
+              
+----
+
+
+
+        where [x-]`z(n,k,j,i)` is height, positive upwards, relative to ocean
+        datum (e.g. mean sea level) at gridpoint [x-]`(n,k,j,i)`,
+        [x-]`eta(n,j,i)`
+        is the height of the ocean surface, positive upwards, relative
+        to ocean datum at gridpoint [x-]`(n,j,i)`,
+        [x-]`sigma(k)` is the dimensionless
+        coordinate at vertical gridpoint [x-]`(k)` for
+        [x-]`k &lt;= nsigma`,
+        and [x-]`depth(j,i)` is the distance from ocean datum to
+        sea floor (positive value) at horizontal gridpoint [x-]`(j,i)`.
+        Above depth [x-]`depth_c` there are [x-]`nsigma` layers.
+      
+
+
+        The format for the 
+        [x-]`formula_terms` 
+        attribute is 
+        
+++++++++++++++++++++++++++++++++++++++
+<programlisting format="linespecific">
+<varname>formula_terms</varname> = "sigma: var1 eta: var2 depth: var3 depth_c: var4 nsigma: var5
+                zlev: var6"
+        </programlisting>
+++++++++++++++++++++++++++++++++++++++
+
+
+      
+
+
+    
+    
+    Ocean double sigma coordinate 
+        
+++++++++++++++++++++++++++++++++++++++
+<programlisting format="linespecific">
+<varname>standard_name</varname> = "ocean_double_sigma_coordinate"
+        </programlisting>
+++++++++++++++++++++++++++++++++++++++
+
+
+      
+
+
+        Definition::: 
+----
+
+for k <= k_c:
+
+  z(k,j,i)= sigma(k)*f(j,i)
+
+for k > k_c:
+
+  z(k,j,i)= f(j,i) + (sigma(k)-1)*(depth(j,i)-f(j,i))
+
+f(j,i)= 0.5*(z1+ z2) + 0.5*(z1-z2)* tanh(2*a/(z1-z2)*(depth(j,i)-href))
+              
+----
+
+
+
+        where [x-]`z(k,j,i)` is height, positive upwards, relative to ocean
+        datum (e.g. mean sea level) at gridpoint [x-]`(k,j,i)`,
+        [x-]`sigma(k)` is the dimensionless coordinate at vertical
+        gridpoint [x-]`(k)` for [x-]`k &lt;= k_c`,
+        and [x-]`depth(j,i)` is the distance
+        from ocean datum to sea floor (positive value) at horizontal
+        gridpoint [x-]`(j,i)`.
+        z1, z2, a, and href are constants.
+      
+
+
+        The format for the 
+        [x-]`formula_terms` 
+        attribute is 
+        
+++++++++++++++++++++++++++++++++++++++
+<programlisting format="linespecific">
+<varname>formula_terms</varname> = "sigma: var1 depth: var2 z1: var3 z2: var4 a: var5 href: var6
+                k_c: var7"
+        </programlisting>
+++++++++++++++++++++++++++++++++++++++
+
+
+      
+
+
+    
+    
+    
+

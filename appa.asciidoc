@@ -1,0 +1,119 @@
+[[attribute-appendix]]
+
+[appendix]
+== Attributes
+
+All CF attributes are listed here except for those that are used to describe grid mappings. See Appendix F for the grid mapping attributes.
+
+The "Type" values are **S** for string,
+  **N** for numeric, and **D** for the type of the data variable. The "Use" values
+  are **G** for global, **C** for variables containing coordinate data, and
+  **D** for variables containing non-coordinate
+  data. "Links" indicates the location of the attribute"s original definition
+  (first link) and sections where the attribute is discussed in this document
+  (additional links as necessary). .Attributes
+[options="header"]
+|===============
+|Attribute|Type|Use|Links|Description
+|[x-]`actual_range`|N|C,
+            D|<<actual_range>>|The smallest and the largest valid
+            non-missing values occurring in the variable
+|[x-]`add_offset`|N|D|link:$$http://www.unidata.ucar.edu/netcdf/docs/netcdf.html#Attribute-Conventions$$[NUG (8.1)] , <<packed-data>>|If present for a variable, this number is to be added to
+            the data after it is read by an application. If both
+            [x-]`scale_factor` and [x-]`add_offset`
+            attributes are present, the data are first scaled before the
+            offset is added.
+|[x-]`ancillary_variables `|S|D|<<ancillary-data>>|Identifies a variable that contains closely associated
+            data, e.g., the measurement uncertainties of instrument
+            data.
+|[x-]`axis`|S|C|<<coordinate-types>>|Identifies latitude, longitude, vertical, or time
+            axes.
+|[x-]`bounds`|S|C|<<cell-boundaries>>|Identifies a boundary variable.
+|[x-]`calendar`|S|C|<<calendar>>|Calendar used for encoding time axes.
+|[x-]`cell_measures`|S|D|<<cell-measures>>|Identifies variables that contain cell areas or
+            volumes.
+|[x-]`cell_methods`|S|D|<<cell-methods>>, <<climatological-statistics>>|Records the method used to derive data that represents cell
+            values.
+|[x-]`cf_role`|C|C|<<coordinates-metadata>>|Identifies the roles of variables
+            that identify features in discrete sampling
+            geometries
+|[x-]`climatology`|S|C|<<climatological-statistics>>|Identifies a climatology variable.
+|[x-]`comment`|S|G, D|<<description-of-file-contents>>|Miscellaneous information about the data or methods used to
+            produce it.
+|[x-]`compress`|S|C|<<compression-by-gathering>>,
+            <<reduced-horizontal-grid>>|Records dimensions which have been compressed by
+            gathering.
+|[x-]`Conventions`|S|G|link:$$http://www.unidata.ucar.edu/netcdf/docs/netcdf.html#Attribute-Conventions$$[NUG (8.1)]|Name of the conventions followed by the dataset.
+|[x-]`coordinates`|S|D|<<coordinate-system>>, <<labels>>, <<alternative-coordinates>>|Identifies auxiliary coordinate variables, label variables,
+            and alternate coordinate variables.
+|[x-]`_FillValue`|D|C,
+            D|link:$$http://www.unidata.ucar.edu/netcdf/docs/netcdf.html#Attribute-Conventions$$[NUG (8.1)]|A value used to represent missing or undefined
+            data. Not allowed for coordinate data
+            except in the case of auxiliary coordinate varibles in discrete
+            sampling geometries.
+|[x-]`featureType`|C|G|<<featureType>>|Specifies the type of discrete
+            sampling geometry to which the data in the file belongs, and
+            implies that all data variables in the file contain collections of
+            features of that type.
+|[x-]`flag_masks`|D|D|<<flags>>|Provides a list of bit fields
+            expressing Boolean or enumerated flags.
+|[x-]`flag_meanings`|S|D|<<flags>>|Use in conjunction with [x-]`flag_values` to
+            provide descriptive words or phrases for each flag value. If
+            multi-word phrases are used to describe the flag values, then the
+            words within a phrase should be connected with
+            underscores.
+|[x-]`flag_values`|D|D|<<flags>>|Provides a list of the flag values. Use in conjunction with
+            [x-]`flag_meanings`.
+|[x-]`formula_terms`|S|C|<<dimensionless-vertical-coordinate>>|Identifies variables that correspond to the terms in a
+            formula.
+|[x-]`grid_mapping`|S|D|<<grid-mappings-and-projections>>|Identifies a variable that defines a grid mapping.
+|[x-]`history`|S|G|link:$$http://www.unidata.ucar.edu/netcdf/docs/netcdf.html#Attribute-Conventions$$[NUG (8.1)]|List of the applications that have modified the original
+            data.
+|[x-]`instance_dimension`|N|D|<<representations-features>>|An attribute which identifies an
+            index variable and names the instance dimension to which it
+            applies. The index variable indicates that the indexed ragged
+            array representation is being used for a collection of
+            features.
+|[x-]`institution`|S|G, D|<<description-of-file-contents>>|Where the original data was produced.
+|[x-]`leap_month`|N|C|<<calendar>>|Specifies which month is lengthened by a day in leap years
+            for a user defined calendar.
+|[x-]`leap_year`|N|C|<<calendar>>|Provides an example of a leap year for a user defined
+            calendar. It is assumed that all years that differ from this year
+            by a multiple of four are also leap years.
+|[x-]`long_name`|S|C, D|link:$$http://www.unidata.ucar.edu/netcdf/docs/netcdf.html#Attribute-Conventions$$[NUG (8.1)] , <<long-name>>|A descriptive name that indicates a variable"s content.
+            This name is not standardized.
+|[x-]`missing_value`|D|C,
+            D|<<missing-data>>|A value used to represent missing or undefined data
+            (deprecated by the NUG). Not allowed for
+            coordinate data except in the case of auxiliary coordinate
+            variables in discrete sampling geometries.
+|[x-]`month_lengths`|N|C|<<calendar>>|Specifies the length of each month in a non-leap year for a
+            user defined calendar.
+|[x-]`positive`|S|C|<<coards,COARDS>>|Direction of increasing vertical coordinate value.
+|[x-]`references`|S|G, D|<<description-of-file-contents>>|References that describe the data or methods used to
+            produce it.
+|[x-]`sample_dimension`|N|D|<<representations-features>>|An attribute which identifies a
+            count variable and names the sample dimension to which it applies.
+            The count variable indicates that the contiguous ragged array
+            representation is being used for a collection of
+            features.
+|[x-]`scale_factor`|N|D|link:$$http://www.unidata.ucar.edu/netcdf/docs/netcdf.html#Attribute-Conventions$$[NUG (8.1)] , <<packed-data>>|If present for a variable, the data are to be multiplied by
+            this factor after the data are read by an application See also the
+            [x-]`add_offset` attribute.
+|[x-]`source`|S|G, D|<<description-of-file-contents>>|Method of production of the original data.
+|[x-]`standard_error_multiplier`|N|D|<<standard-name-modifiers>>|If a data variable with a standard_name modifier of
+            standard_error has this attribute, it indicates that the values
+            are the stated multiple of one standard error.
+|[x-]`standard_name`|S|C, D|<<standard-name>>|A standard name that references a description of a
+            variable"s content in the standard name table.
+|[x-]`title`|S|G|link:$$http://www.unidata.ucar.edu/netcdf/docs/netcdf.html#Attribute-Conventions$$[NUG (8.1)]|Short description of the file contents.
+|[x-]`units`|S|C, D|link:$$http://www.unidata.ucar.edu/netcdf/docs/netcdf.html#Attribute-Conventions$$[NUG (8.1)] , <<units>>|Units of a variable"s content.
+|[x-]`valid_max`|N|C, D|link:$$http://www.unidata.ucar.edu/netcdf/docs/netcdf.html#Attribute-Conventions$$[NUG (8.1)]|Largest valid value of a variable.
+|[x-]`valid_min`|N|C, D|link:$$http://www.unidata.ucar.edu/netcdf/docs/netcdf.html#Attribute-Conventions$$[NUG (8.1)]|Smallest valid value of a variable.
+|[x-]`valid_range`|N|C, D|link:$$http://www.unidata.ucar.edu/netcdf/docs/netcdf.html#Attribute-Conventions$$[NUG (8.1)]|Smallest and largest valid values of a variable.
+
+|===============
+
+
+
+

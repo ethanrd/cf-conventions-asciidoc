@@ -1,0 +1,24 @@
+env:
+    global:
+        - secure: "LqEl8IaiGZRg78OIGVAqo2VbbZ05WIuFl4aqfIFbrtnm9/QsnmmmJZzBHbNKo1Tv0sw5VZPhhaHO3Crt7swl78lhSESzVDYHW6kwTcxRRWoEnRQiKtCpRzJqaLDXTAvhAPeLL8R0lZbCcWzfMKTk1dmEM5r0T6d9ekmESk4eay8="
+        - secure: "uc4Los9ehSo/2cKeFACKEKGHyU+C3ig20nip6WWUIguNjizrOBUhkV7wNpcL2vL7NogutmAfalYz0XyHFPFk7W/AW3B8/bRNHPyLimwwn4mkNM6TgeewSIIBVlggYm0ry/iuSIszrTCYZ9YLvxCXTlhFSccX6GpDo/ct59pnCRI="
+        - secure: "mi6ftePWrQXe75NO7vGZhbuE7s/MtUd1ULfAsxHX0hJo6Tcb1WciQZXVGCJv9bmlyXnBbJJGemRAX6tvjykKwTgJl66qt+oneT6dod626pxeJS8vDsh5F1Wzf4WlFmhybGauyJqe9hzKO/1K+vhrD4OET3MIcwaak5IMy5Dxea8="
+
+before_script:
+    - git config --global user.email $GIT_EMAIL
+    - git config --global user.name $GIT_NAME
+
+install:
+    - gem install asciidoctor
+    - asciidoctor --version
+
+script:
+    - asciidoctor cf-conventions.asciidoc
+
+after_success:
+    - git clone https://${GH_TOKEN}@github.com/cf-metadata/cf-metadata.github.io.git pages
+    - mv cf-conventions.html pages/
+    - cd pages
+    - git add cf-conventions.html
+    - git commit -m 'Test'
+    - git push origin master
